@@ -1,0 +1,16 @@
+JSON in Haskell
+===============
+This library pre-dates the standard Haskell JSON library, but they are very similar. The main difference is that this one does not even use any parser combinators.
+
+To use, the function to call is `toJSON`:
+
+```haskell
+toJSON :: Monad m => String -> m JSONValue
+```
+
+Very generic, no? But it has worked in production, so I see it with respect.
+
+Should you even use it?
+----
+These days, there is a standard Haskell JSON library.
+I put this here because a lot of legacy code from the company ([Scyfy Technologies](http://1st.ug/)) depends on it. So here it is.
