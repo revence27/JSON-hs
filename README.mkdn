@@ -10,6 +10,38 @@ toJSON :: Monad m => String -> m JSONValue
 
 Very generic, no? But it has worked in production, so I see it with respect.
 
+It provides a helper operator, `@@` which has this signature:
+
+```haskell
+(@@) :: Monad m => String -> JSONValue -> m JSONValue
+```
+
+It is like XPath for JSON; in an object like this:
+
+```javascript
+{'country':{'name':'Uganda', 'anthem':'Oh, Uganda'}}
+```
+
+You can access it thus:
+
+```haskell
+case parseJSON jsonString of
+  Just jsonObject -> case "/country/name" @@ jsonObject of
+    Just (JStr name) -> name  --  That will return "Uganda".
+    _                -> ""
+  _               -> ""
+```
+
+The monad returned contains a value (the parsed JSON) of this data type:
+
+```haskell
+data JSONValue = JNum Int | JStr String | JBool Bool | JNull |
+                 JArr [JSONValue] | JObj (Data.Map.Map String JSONValue)
+
+```
+
+Not as bad as you feared, is it?
+
 Should you even use it?
 ----
 These days, there is a standard Haskell JSON library.
